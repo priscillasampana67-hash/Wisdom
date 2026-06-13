@@ -90,6 +90,7 @@ void temp :: forgotPassword(){
     while(!file.eof()){
         if(userName == userName){
             if(Email == Email){
+
                 cout<<"\nAccount Found...!"<<endl;
                 cout<<"Yoour Password ::"<<Password<<endl;
             }else{
