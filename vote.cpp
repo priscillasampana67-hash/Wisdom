@@ -64,7 +64,7 @@ int main(){
     CorrectEmail = "madam@st.knust.edu.gh";
     CorrectRef = 21721811;
 
-    if(email == CorrectEmail && ReferenceNum == CorrectRef) 
+    if(email == CorrectEmail ) 
     {
      cout << "candidate _1" << endl;
      cout << "candidate _2" << endl;
