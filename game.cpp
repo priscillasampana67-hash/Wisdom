@@ -184,4 +184,5 @@ void logic(){
         fruitY = rand()%height;
         tail_len++;
     }
+    
 }
