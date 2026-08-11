@@ -1,0 +1,2 @@
+Prikey|20
+food|40
