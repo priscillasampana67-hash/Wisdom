@@ -1,0 +1,4139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>CampusOS 2.0 | Student Command Center</title>
+
+<style>
+
+/* =========================================================
+   CAMPUSOS 2.0
+   HTML + CSS + JAVASCRIPT IN ONE FILE
+========================================================= */
+
+/* ---------- ROOT ---------- */
+
+:root {
+    --primary: #6c63ff;
+    --primary-dark: #554cf0;
+    --secondary: #8b5cf6;
+
+    --background: #f5f7fb;
+    --card: #ffffff;
+    --text: #171a2b;
+    --muted: #73798c;
+    --border: #e6e8ef;
+
+    --success: #16a34a;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+
+    --sidebar: #101426;
+    --sidebar-hover: #20263d;
+
+    --shadow:
+        0 10px 35px rgba(20, 25, 45, 0.07);
+
+    --radius: 18px;
+}
+
+/* ---------- DARK MODE ---------- */
+
+body.dark {
+    --background: #0b0e17;
+    --card: #121725;
+    --text: #f5f7ff;
+    --muted: #a1a7b8;
+    --border: #252b3d;
+
+    --sidebar: #090b12;
+    --sidebar-hover: #1b2030;
+}
+
+/* ---------- RESET ---------- */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--background);
+    color: var(--text);
+    transition: 0.3s;
+}
+
+button,
+input,
+textarea,
+select {
+    font-family: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+/* =========================================================
+   LAYOUT
+========================================================= */
+
+.app {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* =========================================================
+   SIDEBAR
+========================================================= */
+
+.sidebar {
+    width: 260px;
+    height: 100vh;
+
+    position: fixed;
+    left: 0;
+    top: 0;
+
+    background: var(--sidebar);
+    color: white;
+
+    padding: 25px 17px;
+
+    display: flex;
+    flex-direction: column;
+
+    z-index: 100;
+
+    transition: 0.3s;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    margin-bottom: 40px;
+}
+
+.logo-icon {
+    width: 42px;
+    height: 42px;
+
+    border-radius: 13px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background:
+        linear-gradient(
+            135deg,
+            #6c63ff,
+            #a855f7
+        );
+
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.logo h2 {
+    font-size: 20px;
+}
+
+.logo span {
+    color: #8b83ff;
+}
+
+.logo small {
+    display: block;
+    color: #858ca5;
+    font-size: 9px;
+    margin-top: 2px;
+}
+
+/* ---------- NAVIGATION ---------- */
+
+.nav {
+    list-style: none;
+}
+
+.nav li {
+    margin-bottom: 7px;
+}
+
+.nav button {
+    width: 100%;
+
+    padding: 13px 14px;
+
+    border: none;
+    border-radius: 11px;
+
+    background: transparent;
+
+    color: #aeb4c9;
+
+    text-align: left;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    display: flex;
+    align-items: center;
+    gap: 13px;
+
+    transition: 0.2s;
+}
+
+.nav button:hover {
+    background: var(--sidebar-hover);
+    color: white;
+}
+
+.nav button.active {
+    background: var(--sidebar-hover);
+    color: white;
+
+    box-shadow:
+        inset 3px 0 #756bff;
+}
+
+/* ---------- SIDEBAR FOCUS ---------- */
+
+.focus-card {
+    margin-top: auto;
+
+    background:
+        linear-gradient(
+            145deg,
+            #262b48,
+            #171b2d
+        );
+
+    border: 1px solid #303651;
+
+    border-radius: 17px;
+
+    padding: 18px;
+}
+
+.focus-icon {
+    width: 38px;
+    height: 38px;
+
+    border-radius: 50%;
+
+    background: #6c63ff;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin-bottom: 10px;
+}
+
+.focus-card h3 {
+    font-size: 14px;
+}
+
+.focus-card p {
+    font-size: 11px;
+    color: #9fa6bd;
+    line-height: 1.5;
+    margin: 7px 0 13px;
+}
+
+.focus-card button {
+    width: 100%;
+
+    border: none;
+    border-radius: 8px;
+
+    padding: 9px;
+
+    background: white;
+    color: #171a2b;
+
+    font-weight: bold;
+}
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+.main {
+    margin-left: 260px;
+    width: calc(100% - 260px);
+
+    min-height: 100vh;
+}
+
+/* =========================================================
+   TOPBAR
+========================================================= */
+
+.topbar {
+    height: 75px;
+
+    background: var(--card);
+
+    border-bottom:
+        1px solid var(--border);
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 0 32px;
+
+    position: sticky;
+    top: 0;
+
+    z-index: 50;
+}
+
+.menu-button {
+    display: none;
+
+    background: none;
+    border: none;
+
+    font-size: 23px;
+    color: var(--text);
+}
+
+/* ---------- SEARCH ---------- */
+
+.search-box {
+    width: min(470px, 50%);
+
+    display: flex;
+    align-items: center;
+
+    background: var(--background);
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 11px;
+
+    padding: 0 12px;
+}
+
+.search-box span {
+    color: var(--muted);
+}
+
+.search-box input {
+    flex: 1;
+
+    border: none;
+    outline: none;
+
+    background: transparent;
+
+    padding: 11px;
+
+    color: var(--text);
+}
+
+/* ---------- USER ---------- */
+
+.top-right {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+}
+
+.icon-button {
+    width: 40px;
+    height: 40px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 10px;
+
+    background: var(--card);
+
+    color: var(--text);
+
+    position: relative;
+}
+
+.notification-dot {
+    position: absolute;
+
+    width: 7px;
+    height: 7px;
+
+    background: red;
+
+    border-radius: 50%;
+
+    right: 8px;
+    top: 7px;
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+
+    border-radius: 50%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f0abfc,
+            #7c3aed
+        );
+
+    color: white;
+
+    font-weight: bold;
+}
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.content {
+    padding: 34px;
+
+    max-width: 1500px;
+
+    margin: auto;
+}
+
+/* =========================================================
+   PAGE HEADER
+========================================================= */
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+
+    margin-bottom: 27px;
+}
+
+.page-header h1 {
+    font-size: 36px;
+    margin: 7px 0;
+}
+
+.page-header p {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.eyebrow {
+    color: var(--primary);
+
+    font-size: 11px;
+
+    font-weight: bold;
+
+    letter-spacing: 1px;
+
+    text-transform: uppercase;
+}
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+.btn {
+    padding: 10px 15px;
+
+    border-radius: 9px;
+
+    border: none;
+
+    font-weight: bold;
+
+    transition: 0.2s;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: white;
+}
+
+.btn-primary:hover {
+    background: var(--primary-dark);
+}
+
+.btn-outline {
+    background: var(--card);
+    color: var(--text);
+
+    border:
+        1px solid var(--border);
+}
+
+.btn-danger {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+/* =========================================================
+   GRID
+========================================================= */
+
+.grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(12, 1fr);
+
+    gap: 18px;
+}
+
+.col-3 {
+    grid-column: span 3;
+}
+
+.col-4 {
+    grid-column: span 4;
+}
+
+.col-5 {
+    grid-column: span 5;
+}
+
+.col-6 {
+    grid-column: span 6;
+}
+
+.col-7 {
+    grid-column: span 7;
+}
+
+.col-8 {
+    grid-column: span 8;
+}
+
+.col-12 {
+    grid-column: span 12;
+}
+
+/* =========================================================
+   CARD
+========================================================= */
+
+.card {
+    background: var(--card);
+
+    border:
+        1px solid var(--border);
+
+    border-radius: var(--radius);
+
+    padding: 21px;
+
+    box-shadow: var(--shadow);
+
+    transition:
+        transform 0.2s,
+        box-shadow 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+}
+
+/* =========================================================
+   STAT CARDS
+========================================================= */
+
+.stat-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-title {
+    color: var(--muted);
+
+    font-size: 12px;
+
+    font-weight: bold;
+}
+
+.stat-number {
+    font-size: 29px;
+
+    font-weight: bold;
+
+    margin: 10px 0 5px;
+}
+
+.stat-change {
+    color: var(--success);
+
+    font-size: 11px;
+
+    font-weight: bold;
+}
+
+.stat-icon {
+    position: absolute;
+
+    right: 18px;
+    top: 18px;
+
+    width: 40px;
+    height: 40px;
+
+    border-radius: 12px;
+
+    background: #eeecff;
+
+    color: var(--primary);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 18px;
+}
+
+/* =========================================================
+   CARD HEADER
+========================================================= */
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 17px;
+}
+
+.card-header h2 {
+    font-size: 17px;
+}
+
+/* =========================================================
+   TASKS
+========================================================= */
+
+.task {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 13px 0;
+
+    border-bottom:
+        1px solid var(--border);
+}
+
+.task:last-child {
+    border-bottom: none;
+}
+
+.task-checkbox {
+    width: 19px;
+    height: 19px;
+}
+
+.task-info {
+    flex: 1;
+}
+
+.task-name {
+    font-size: 13px;
+
+    font-weight: bold;
+}
+
+.task-meta {
+    color: var(--muted);
+
+    font-size: 10px;
+
+    margin-top: 4px;
+}
+
+.task.completed .task-name {
+    text-decoration: line-through;
+
+    color: var(--muted);
+}
+
+.badge {
+    padding: 5px 8px;
+
+    border-radius: 6px;
+
+    font-size: 9px;
+
+    font-weight: bold;
+}
+
+.badge-high {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+.badge-medium {
+    background: #fef3c7;
+    color: #d97706;
+}
+
+.badge-low {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+/* =========================================================
+   COURSES
+========================================================= */
+
+.course {
+    margin-bottom: 18px;
+}
+
+.course:last-child {
+    margin-bottom: 0;
+}
+
+.course-top {
+    display: flex;
+
+    justify-content: space-between;
+
+    font-size: 12px;
+
+    margin-bottom: 7px;
+}
+
+.course-name {
+    font-weight: bold;
+}
+
+.progress-track {
+    height: 8px;
+
+    background: #e9ebf2;
+
+    border-radius: 20px;
+
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--primary),
+            var(--secondary)
+        );
+
+    border-radius: 20px;
+}
+
+/* =========================================================
+   TIMETABLE
+========================================================= */
+
+.schedule-item {
+    display: flex;
+
+    gap: 15px;
+
+    margin-bottom: 14px;
+}
+
+.schedule-time {
+    width: 72px;
+
+    color: var(--muted);
+
+    font-size: 11px;
+
+    padding-top: 11px;
+}
+
+.schedule-class {
+    flex: 1;
+
+    padding: 11px 13px;
+
+    border-left:
+        4px solid var(--primary);
+
+    background: #f0efff;
+
+    border-radius: 8px;
+}
+
+.dark .schedule-class {
+    background: #1b1b36;
+}
+
+.schedule-class strong {
+    font-size: 12px;
+}
+
+.schedule-class small {
+    display: block;
+
+    color: var(--muted);
+
+    margin-top: 4px;
+
+    font-size: 10px;
+}
+
+/* =========================================================
+   PROGRESS
+========================================================= */
+
+.progress-container {
+    display: flex;
+
+    align-items: center;
+
+    gap: 25px;
+}
+
+.progress-circle {
+    width: 130px;
+    height: 130px;
+
+    border-radius: 50%;
+
+    background:
+        conic-gradient(
+            var(--primary) 0 82%,
+            #e8eaf1 82% 100%
+        );
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+}
+
+.progress-circle-inner {
+    width: 98px;
+    height: 98px;
+
+    border-radius: 50%;
+
+    background: var(--card);
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    font-size: 23px;
+
+    font-weight: bold;
+}
+
+/* =========================================================
+   CHART
+========================================================= */
+
+.chart {
+    height: 180px;
+
+    display: flex;
+
+    align-items: flex-end;
+
+    gap: 12px;
+
+    padding-top: 20px;
+}
+
+.chart-column {
+    flex: 1;
+
+    height: 100%;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: flex-end;
+
+    align-items: center;
+
+    gap: 7px;
+}
+
+.chart-bar {
+    width: 35px;
+
+    max-width: 70%;
+
+    background:
+        linear-gradient(
+            to top,
+            var(--primary),
+            #9b8cff
+        );
+
+    border-radius:
+        7px 7px 3px 3px;
+}
+
+.chart-column span {
+    color: var(--muted);
+
+    font-size: 9px;
+}
+
+/* =========================================================
+   COURSE GRID
+========================================================= */
+
+.course-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(240px, 1fr)
+        );
+
+    gap: 18px;
+}
+
+.course-card {
+    position: relative;
+}
+
+.course-icon {
+    width: 50px;
+    height: 50px;
+
+    border-radius: 14px;
+
+    background: #eeecff;
+
+    color: var(--primary);
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    font-weight: bold;
+
+    margin-bottom: 14px;
+}
+
+.course-card h3 {
+    font-size: 16px;
+
+    margin-bottom: 7px;
+}
+
+.course-card p {
+    color: var(--muted);
+
+    font-size: 11px;
+
+    margin-bottom: 15px;
+}
+
+/* =========================================================
+   NOTES
+========================================================= */
+
+.notes-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(250px, 1fr)
+        );
+
+    gap: 18px;
+}
+
+.note-card {
+    min-height: 200px;
+}
+
+.note-tag {
+    color: var(--primary);
+
+    font-size: 9px;
+
+    font-weight: bold;
+
+    letter-spacing: 1px;
+}
+
+.note-card h3 {
+    margin: 12px 0;
+
+    font-size: 16px;
+}
+
+.note-card p {
+    color: var(--muted);
+
+    font-size: 12px;
+
+    line-height: 1.7;
+}
+
+/* =========================================================
+   CWA CALCULATOR
+========================================================= */
+
+.calculator {
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 20px;
+}
+
+.form-group {
+    margin-bottom: 14px;
+}
+
+.form-group label {
+    display: block;
+
+    font-size: 11px;
+
+    font-weight: bold;
+
+    margin-bottom: 6px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+
+    padding: 11px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 9px;
+
+    outline: none;
+
+    background: var(--background);
+
+    color: var(--text);
+}
+
+.result-box {
+    background:
+        linear-gradient(
+            135deg,
+            var(--primary),
+            var(--secondary)
+        );
+
+    color: white;
+
+    padding: 25px;
+
+    border-radius: 15px;
+
+    text-align: center;
+}
+
+.result-box h2 {
+    font-size: 42px;
+
+    margin: 12px 0;
+}
+
+/* =========================================================
+   FOCUS TIMER
+========================================================= */
+
+.timer {
+    text-align: center;
+
+    padding: 20px;
+}
+
+.timer-display {
+    font-size: 65px;
+
+    font-weight: bold;
+
+    letter-spacing: 2px;
+
+    margin: 25px 0;
+}
+
+/* =========================================================
+   AI ASSISTANT
+========================================================= */
+
+.ai-box {
+    display: flex;
+
+    flex-direction: column;
+
+    height: 550px;
+}
+
+.chat-messages {
+    flex: 1;
+
+    overflow-y: auto;
+
+    padding: 15px;
+
+    background: var(--background);
+
+    border-radius: 12px;
+
+    margin-bottom: 12px;
+}
+
+.message {
+    max-width: 75%;
+
+    padding: 11px 14px;
+
+    border-radius: 12px;
+
+    margin-bottom: 10px;
+
+    font-size: 12px;
+
+    line-height: 1.5;
+}
+
+.message.ai {
+    background: #eceaff;
+
+    color: #373174;
+
+    border-bottom-left-radius: 3px;
+}
+
+.dark .message.ai {
+    background: #242044;
+    color: #ddd9ff;
+}
+
+.message.user {
+    background: var(--primary);
+
+    color: white;
+
+    margin-left: auto;
+
+    border-bottom-right-radius: 3px;
+}
+
+.chat-input {
+    display: flex;
+
+    gap: 8px;
+}
+
+.chat-input input {
+    flex: 1;
+
+    padding: 12px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 9px;
+
+    background: var(--background);
+
+    color: var(--text);
+
+    outline: none;
+}
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+.modal-overlay {
+    position: fixed;
+
+    inset: 0;
+
+    background:
+        rgba(0,0,0,0.55);
+
+    display: none;
+
+    justify-content: center;
+    align-items: center;
+
+    z-index: 1000;
+
+    padding: 20px;
+}
+
+.modal-overlay.show {
+    display: flex;
+}
+
+.modal {
+    width: min(520px, 100%);
+
+    background: var(--card);
+
+    border-radius: 20px;
+
+    padding: 25px;
+
+    position: relative;
+
+    box-shadow:
+        0 30px 80px rgba(0,0,0,.3);
+}
+
+.modal-close {
+    position: absolute;
+
+    right: 15px;
+    top: 12px;
+
+    width: 32px;
+    height: 32px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: var(--background);
+
+    color: var(--text);
+
+    font-size: 20px;
+}
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+.toast {
+    position: fixed;
+
+    right: 25px;
+    bottom: 25px;
+
+    background: #111827;
+
+    color: white;
+
+    padding: 13px 17px;
+
+    border-radius: 10px;
+
+    font-size: 12px;
+
+    transform:
+        translateY(100px);
+
+    opacity: 0;
+
+    transition: .3s;
+
+    z-index: 2000;
+}
+
+.toast.show {
+    transform:
+        translateY(0);
+
+    opacity: 1;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:1100px) {
+
+    .col-3,
+    .col-4,
+    .col-5,
+    .col-6,
+    .col-7,
+    .col-8 {
+        grid-column: span 6;
+    }
+
+    .calculator {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media(max-width:750px) {
+
+    .sidebar {
+        transform:
+            translateX(-100%);
+    }
+
+    .sidebar.open {
+        transform:
+            translateX(0);
+    }
+
+    .main {
+        margin-left: 0;
+
+        width: 100%;
+    }
+
+    .menu-button {
+        display: block;
+    }
+
+    .topbar {
+        padding: 0 17px;
+
+        gap: 10px;
+    }
+
+    .search-box {
+        width: 55%;
+    }
+
+    .content {
+        padding: 20px 15px;
+    }
+
+    .page-header {
+        align-items: flex-start;
+
+        flex-direction: column;
+
+        gap: 15px;
+    }
+
+    .page-header h1 {
+        font-size: 28px;
+    }
+
+    .col-3,
+    .col-4,
+    .col-5,
+    .col-6,
+    .col-7,
+    .col-8 {
+        grid-column: span 12;
+    }
+}
+
+</style>
+</head>
+
+
+<body>
+
+<div class="app">
+
+
+<!-- ======================================================
+     SIDEBAR
+====================================================== -->
+
+<aside class="sidebar" id="sidebar">
+
+    <div class="logo">
+
+        <div class="logo-icon">
+            C
+        </div>
+
+        <div>
+
+            <h2>
+                Campus<span>OS</span>
+            </h2>
+
+            <small>
+                STUDENT COMMAND CENTER
+            </small>
+
+        </div>
+
+    </div>
+
+
+    <ul class="nav">
+
+        <li>
+            <button
+                class="active"
+                onclick="navigate('dashboard', this)"
+            >
+                🏠
+                Dashboard
+            </button>
+        </li>
+
+        <li>
+            <button
+                onclick="navigate('courses', this)"
+            >
+                📚
+                My Courses
+            </button>
+        </li>
+
+        <li>
+            <button
+                onclick="navigate('tasks', this)"
+            >
+                ✅
+                Tasks
+            </button>
+        </li>
+
+        <li>
+            <button
+                onclick="navigate('notes', this)"
+            >
+                📝
+                Notes
+            </button>
+        </li>
+
+        <li>
+            <button
+                onclick="navigate('schedule', this)"
+            >
+                🗓
+                Timetable
+            </button>
+        </li>
+
+        <li>
+            <button
+                onclick="navigate('cwa', this)"
+            >
+                🎓
+                CWA Calculator
+            </button>
+        </li>
+
+        <li>
+            <button
+                onclick="navigate('progress', this)"
+            >
+                📊
+                Progress
+            </button>
+        </li>
+
+        <li>
+            <button
+                onclick="navigate('ai', this)"
+            >
+                🤖
+                AI Study Assistant
+            </button>
+        </li>
+
+    </ul>
+
+
+    <div class="focus-card">
+
+        <div class="focus-icon">
+            🎯
+        </div>
+
+        <h3>
+            Focus Mode
+        </h3>
+
+        <p>
+            Eliminate distractions and study
+            for 25 minutes.
+        </p>
+
+        <button
+            onclick="startFocus()"
+        >
+            Start Focus
+        </button>
+
+    </div>
+
+</aside>
+
+
+<!-- ======================================================
+     MAIN
+====================================================== -->
+
+<main class="main">
+
+
+<!-- ======================================================
+     TOPBAR
+====================================================== -->
+
+<header class="topbar">
+
+    <button
+        class="menu-button"
+        onclick="toggleSidebar()"
+    >
+        ☰
+    </button>
+
+
+    <div class="search-box">
+
+        <span>
+            🔍
+        </span>
+
+        <input
+            id="searchInput"
+            type="text"
+            placeholder="Search CampusOS..."
+            oninput="globalSearch(this.value)"
+        >
+
+    </div>
+
+
+    <div class="top-right">
+
+        <button
+            class="icon-button"
+            onclick="showNotifications()"
+        >
+
+            🔔
+
+            <span
+                class="notification-dot"
+            ></span>
+
+        </button>
+
+
+        <button
+            class="icon-button"
+            onclick="toggleDarkMode()"
+        >
+            🌙
+        </button>
+
+
+        <div class="avatar">
+            PS
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- ======================================================
+     CONTENT
+====================================================== -->
+
+<section
+    class="content"
+    id="content"
+></section>
+
+
+</main>
+
+</div>
+
+
+<!-- ======================================================
+     MODAL
+====================================================== -->
+
+<div
+    class="modal-overlay"
+    id="modal"
+>
+
+    <div class="modal">
+
+        <button
+            class="modal-close"
+            onclick="closeModal()"
+        >
+            ×
+        </button>
+
+        <div id="modalContent"></div>
+
+    </div>
+
+</div>
+
+
+<!-- ======================================================
+     TOAST
+====================================================== -->
+
+<div
+    class="toast"
+    id="toast"
+></div>
+
+
+<script>
+
+/* =========================================================
+   CAMPUSOS JAVASCRIPT
+========================================================= */
+
+
+/* =========================================================
+   DATA
+========================================================= */
+
+let courses = [
+
+    {
+        code: "CSM 157",
+        name: "Structured Programming",
+        grade: 50,
+        credits: 3,
+        progress: 74
+    },
+
+    {
+        code: "MATH 171",
+        name: "Calculus I",
+        grade: 84,
+        credits: 3,
+        progress: 88
+    },
+
+    {
+        code: "CSM 165",
+        name: "Discrete Mathematics",
+        grade: 62,
+        credits: 3,
+        progress: 61
+    },
+
+    {
+        code: "ECON 151",
+        name: "Economics",
+        grade: 77,
+        credits: 3,
+        progress: 79
+    },
+
+    {
+        code: "CSM 151",
+        name: "Information Technology",
+        grade: 83,
+        credits: 3,
+        progress: 83
+    },
+
+    {
+        code: "STAT 155",
+        name: "Probability & Statistics",
+        grade: 72,
+        credits: 3,
+        progress: 57
+    }
+
+];
+
+
+let tasks =
+JSON.parse(
+    localStorage.getItem("campusTasks")
+) || [
+
+    {
+        title:
+        "Finish C++ Arrays Practice",
+
+        meta:
+        "Programming • Today",
+
+        priority:
+        "HIGH",
+
+        completed:
+        false
+    },
+
+    {
+        title:
+        "Review Integration Rules",
+
+        meta:
+        "Calculus • Tomorrow",
+
+        priority:
+        "MEDIUM",
+
+        completed:
+        false
+    },
+
+    {
+        title:
+        "Submit Economics Assignment",
+
+        meta:
+        "Economics • Aug 27",
+
+        priority:
+        "HIGH",
+
+        completed:
+        true
+    },
+
+    {
+        title:
+        "Read Graph Theory Notes",
+
+        meta:
+        "Discrete Maths • Aug 28",
+
+        priority:
+        "LOW",
+
+        completed:
+        false
+    }
+
+];
+
+
+let notes =
+JSON.parse(
+    localStorage.getItem("campusNotes")
+) || [
+
+    {
+        title:
+        "C++ Arrays",
+
+        tag:
+        "PROGRAMMING",
+
+        content:
+        "Arrays store multiple values of the same data type. Indexing starts from zero."
+    },
+
+    {
+        title:
+        "Calculus Rules",
+
+        tag:
+        "CALCULUS",
+
+        content:
+        "Always check integration answers by differentiating the result."
+    },
+
+    {
+        title:
+        "Exam Strategy",
+
+        tag:
+        "STUDY",
+
+        content:
+        "Do easy questions first, show your working and reserve time for checking."
+    }
+
+];
+
+
+/* =========================================================
+   SAVE DATA
+========================================================= */
+
+function saveData() {
+
+    localStorage.setItem(
+        "campusTasks",
+        JSON.stringify(tasks)
+    );
+
+    localStorage.setItem(
+        "campusNotes",
+        JSON.stringify(notes)
+    );
+
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+function navigate(page, button) {
+
+    document
+        .querySelectorAll(".nav button")
+        .forEach(btn =>
+            btn.classList.remove("active")
+        );
+
+    if (button) {
+
+        button.classList.add("active");
+
+    }
+
+    const pages = {
+
+        dashboard:
+        renderDashboard,
+
+        courses:
+        renderCourses,
+
+        tasks:
+        renderTasks,
+
+        notes:
+        renderNotes,
+
+        schedule:
+        renderSchedule,
+
+        cwa:
+        renderCWA,
+
+        progress:
+        renderProgress,
+
+        ai:
+        renderAI
+
+    };
+
+    if (pages[page]) {
+
+        pages[page]();
+
+    }
+
+    document
+        .getElementById("sidebar")
+        .classList.remove("open");
+
+}
+
+
+/* =========================================================
+   DASHBOARD
+========================================================= */
+
+function renderDashboard() {
+
+    const completed =
+        tasks.filter(
+            task => task.completed
+        ).length;
+
+
+    const percentage =
+        Math.round(
+            completed /
+            tasks.length *
+            100
+        );
+
+
+    document.getElementById("content")
+    .innerHTML = `
+
+    <div class="page-header">
+
+        <div>
+
+            <div class="eyebrow">
+                MONDAY • AUGUST 24, 2026
+            </div>
+
+            <h1>
+                Good evening, Priscilla 👋
+            </h1>
+
+            <p>
+                Your academic command center is ready.
+                Let's make today count.
+            </p>
+
+        </div>
+
+        <button
+            class="btn btn-primary"
+            onclick="startFocus()"
+        >
+            🎯 Start Focus
+        </button>
+
+    </div>
+
+
+    <div class="grid">
+
+
+        <!-- CWA -->
+
+        <div class="card stat-card col-3">
+
+            <div class="stat-title">
+                CURRENT CWA
+            </div>
+
+            <div class="stat-number">
+                68.19
+            </div>
+
+            <div class="stat-change">
+                ↑ 4.7% this semester
+            </div>
+
+            <div class="stat-icon">
+                🎓
+            </div>
+
+        </div>
+
+
+        <!-- STREAK -->
+
+        <div class="card stat-card col-3">
+
+            <div class="stat-title">
+                STUDY STREAK
+            </div>
+
+            <div class="stat-number">
+                12 Days 🔥
+            </div>
+
+            <div class="stat-change">
+                Personal best
+            </div>
+
+            <div class="stat-icon">
+                🔥
+            </div>
+
+        </div>
+
+
+        <!-- TASKS -->
+
+        <div class="card stat-card col-3">
+
+            <div class="stat-title">
+                TASKS COMPLETED
+            </div>
+
+            <div class="stat-number">
+                ${completed}/${tasks.length}
+            </div>
+
+            <div class="stat-change">
+                ${percentage}% complete
+            </div>
+
+            <div class="stat-icon">
+                ✓
+            </div>
+
+        </div>
+
+
+        <!-- FOCUS -->
+
+        <div class="card stat-card col-3">
+
+            <div class="stat-title">
+                FOCUS TIME
+            </div>
+
+            <div class="stat-number">
+                18.5h
+            </div>
+
+            <div class="stat-change">
+                ↑ 2.1h this week
+            </div>
+
+            <div class="stat-icon">
+                ⏱
+            </div>
+
+        </div>
+
+
+        <!-- TASK LIST -->
+
+        <div class="card col-7">
+
+            <div class="card-header">
+
+                <h2>
+                    Today's Tasks
+                </h2>
+
+                <button
+                    class="btn btn-primary"
+                    onclick="openTaskModal()"
+                >
+                    + Add Task
+                </button>
+
+            </div>
+
+            ${renderTaskList()}
+
+        </div>
+
+
+        <!-- COURSES -->
+
+        <div class="card col-5">
+
+            <div class="card-header">
+
+                <h2>
+                    My Courses
+                </h2>
+
+                <button
+                    class="btn btn-outline"
+                    onclick="navigate('courses')"
+                >
+                    View All
+                </button>
+
+            </div>
+
+            ${courses
+                .slice(0,4)
+                .map(courseHTML)
+                .join("")}
+
+        </div>
+
+
+        <!-- TIMETABLE -->
+
+        <div class="card col-5">
+
+            <div class="card-header">
+
+                <h2>
+                    Today's Timetable
+                </h2>
+
+                <button
+                    class="btn btn-outline"
+                    onclick="navigate('schedule')"
+                >
+                    Full
+                </button>
+
+            </div>
+
+
+            ${scheduleHTML()}
+
+        </div>
+
+
+        <!-- PERFORMANCE -->
+
+        <div class="card col-7">
+
+            <div class="card-header">
+
+                <h2>
+                    Academic Performance
+                </h2>
+
+                <span
+                    style="
+                    color:var(--muted);
+                    font-size:11px;
+                    "
+                >
+                    Last 6 assessments
+                </span>
+
+            </div>
+
+
+            <div class="progress-container">
+
+                <div class="progress-circle">
+
+                    <div
+                        class="progress-circle-inner"
+                    >
+                        82%
+                    </div>
+
+                </div>
+
+
+                <div>
+
+                    <h2>
+                        You're on track 🚀
+                    </h2>
+
+                    <p
+                        style="
+                        color:var(--muted);
+                        font-size:12px;
+                        line-height:1.6;
+                        margin-top:7px;
+                        "
+                    >
+                        Calculus is currently your
+                        strongest course. Focus next
+                        on Discrete Mathematics and
+                        Programming.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="chart">
+
+                ${[62,72,68,79,74,86]
+                    .map(
+                        (value,index) => `
+
+                        <div class="chart-column">
+
+                            <div
+                                class="chart-bar"
+                                style="
+                                height:${value}%;
+                                "
+                            ></div>
+
+                            <span>
+                                W${index+1}
+                            </span>
+
+                        </div>
+
+                        `
+                    )
+                    .join("")}
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+    `;
+
+}
+
+
+/* =========================================================
+   TASK HTML
+========================================================= */
+
+function renderTaskList() {
+
+    return tasks
+        .slice(0,6)
+        .map(
+            (task,index) => `
+
+            <div
+                class="task
+                ${task.completed ? "completed" : ""}"
+            >
+
+                <input
+                    class="task-checkbox"
+                    type="checkbox"
+                    ${task.completed ? "checked" : ""}
+                    onchange="
+                    toggleTask(${index})
+                    "
+                >
+
+                <div class="task-info">
+
+                    <div class="task-name">
+                        ${task.title}
+                    </div>
+
+                    <div class="task-meta">
+                        ${task.meta}
+                    </div>
+
+                </div>
+
+
+                <span
+                    class="
+                    badge
+                    ${
+                        task.priority === "HIGH"
+                        ?
+                        "badge-high"
+                        :
+                        task.priority === "MEDIUM"
+                        ?
+                        "badge-medium"
+                        :
+                        "badge-low"
+                    }
+                    "
+                >
+                    ${task.priority}
+                </span>
+
+            </div>
+
+            `
+        )
+        .join("");
+
+}
+
+
+/* =========================================================
+   TOGGLE TASK
+========================================================= */
+
+function toggleTask(index) {
+
+    tasks[index].completed =
+        !tasks[index].completed;
+
+    saveData();
+
+    renderDashboard();
+
+    showToast(
+        tasks[index].completed
+        ?
+        "Task completed 🎉"
+        :
+        "Task reopened"
+    );
+
+}
+
+
+/* =========================================================
+   COURSE HTML
+========================================================= */
+
+function courseHTML(course) {
+
+    return `
+
+    <div class="course">
+
+        <div class="course-top">
+
+            <span class="course-name">
+
+                ${course.code}
+                —
+                ${course.name}
+
+            </span>
+
+            <span>
+                ${course.progress}%
+            </span>
+
+        </div>
+
+
+        <div class="progress-track">
+
+            <div
+                class="progress-fill"
+                style="
+                width:${course.progress}%;
+                "
+            ></div>
+
+        </div>
+
+    </div>
+
+    `;
+
+}
+
+
+/* =========================================================
+   COURSES PAGE
+========================================================= */
+
+function renderCourses() {
+
+    document.getElementById("content")
+    .innerHTML = `
+
+    <div class="page-header">
+
+        <div>
+
+            <div class="eyebrow">
+                ACADEMICS
+            </div>
+
+            <h1>
+                My Courses 📚
+            </h1>
+
+            <p>
+                Manage your courses and track
+                academic progress.
+            </p>
+
+        </div>
+
+        <button
+            class="btn btn-primary"
+            onclick="showToast('Course planner coming soon')"
+        >
+            + Add Course
+        </button>
+
+    </div>
+
+
+    <div class="course-grid">
+
+        ${courses
+            .map(
+                course => `
+
+                <div
+                    class="card course-card"
+                >
+
+                    <div class="course-icon">
+                        ${course.code.split(" ")[0]}
+                    </div>
+
+                    <h3>
+                        ${course.code}
+                    </h3>
+
+                    <p>
+                        ${course.name}
+                    </p>
+
+                    <div
+                        class="course-top"
+                    >
+
+                        <span>
+                            Progress
+                        </span>
+
+                        <strong>
+                            ${course.progress}%
+                        </strong>
+
+                    </div>
+
+                    <div
+                        class="progress-track"
+                    >
+
+                        <div
+                            class="progress-fill"
+                            style="
+                            width:${course.progress}%
+                            "
+                        ></div>
+
+                    </div>
+
+                    <br>
+
+                    <button
+                        class="btn btn-outline"
+                        onclick="
+                        showToast(
+                        '${course.name} opened'
+                        )
+                        "
+                    >
+                        Open Course
+                    </button>
+
+                </div>
+
+                `
+            )
+            .join("")}
+
+    </div>
+
+    `;
+
+}
+
+
+/* =========================================================
+   TASKS PAGE
+========================================================= */
+
+function renderTasks() {
+
+    document.getElementById("content")
+    .innerHTML = `
+
+    <div class="page-header">
+
+        <div>
+
+            <div class="eyebrow">
+                PRODUCTIVITY
+            </div>
+
+            <h1>
+                Tasks & Assignments ✅
+            </h1>
+
+            <p>
+                Never lose track of an assignment again.
+            </p>
+
+        </div>
+
+        <button
+            class="btn btn-primary"
+            onclick="openTaskModal()"
+        >
+            + New Task
+        </button>
+
+    </div>
+
+
+    <div class="grid">
+
+        <div class="card col-8">
+
+            <div class="card-header">
+
+                <h2>
+                    All Tasks
+                </h2>
+
+            </div>
+
+            ${renderTaskList()}
+
+        </div>
+
+
+        <div class="card col-4">
+
+            <h2>
+                Productivity Tip 💡
+            </h2>
+
+            <p
+                style="
+                color:var(--muted);
+                font-size:13px;
+                line-height:1.7;
+                margin:15px 0;
+                "
+            >
+                Break large assignments into
+                smaller study sessions. A 25-minute
+                focused session is often better than
+                two hours of distracted studying.
+            </p>
+
+            <button
+                class="btn btn-primary"
+                onclick="startFocus()"
+            >
+                Start 25-Minute Focus
+            </button>
+
+        </div>
+
+    </div>
+
+    `;
+
+}
+
+
+/* =========================================================
+   TASK MODAL
+========================================================= */
+
+function openTaskModal() {
+
+    document.getElementById("modalContent")
+    .innerHTML = `
+
+    <h2>
+        Create New Task
+    </h2>
+
+    <br>
+
+    <div class="form-group">
+
+        <label>
+            TASK NAME
+        </label>
+
+        <input
+            id="taskTitle"
+            placeholder="
+            e.g. Complete arrays exercises
+            "
+        >
+
+    </div>
+
+
+    <div class="form-group">
+
+        <label>
+            DETAILS
+        </label>
+
+        <input
+            id="taskMeta"
+            placeholder="
+            Programming • Tomorrow
+            "
+        >
+
+    </div>
+
+
+    <div class="form-group">
+
+        <label>
+            PRIORITY
+        </label>
+
+        <select id="taskPriority">
+
+            <option>
+                HIGH
+            </option>
+
+            <option>
+                MEDIUM
+            </option>
+
+            <option>
+                LOW
+            </option>
+
+        </select>
+
+    </div>
+
+
+    <div
+        style="
+        display:flex;
+        justify-content:flex-end;
+        gap:8px;
+        "
+    >
+
+        <button
+            class="btn btn-outline"
+            onclick="closeModal()"
+        >
+            Cancel
+        </button>
+
+        <button
+            class="btn btn-primary"
+            onclick="createTask()"
+        >
+            Create Task
+        </button>
+
+    </div>
+
+    `;
+
+    document
+        .getElementById("modal")
+        .classList.add("show");
+
+}
+
+
+/* =========================================================
+   CREATE TASK
+========================================================= */
+
+function createTask() {
+
+    const title =
+        document
+        .getElementById("taskTitle")
+        .value
+        .trim();
+
+
+    if (!title) {
+
+        showToast(
+            "Please enter a task name"
+        );
+
+        return;
+
+    }
+
+
+    const meta =
+        document
+        .getElementById("taskMeta")
+        .value
+        .trim()
+        ||
+        "Personal • Today";
+
+
+    const priority =
+        document
+        .getElementById("taskPriority")
+        .value;
+
+
+    tasks.unshift({
+
+        title,
+
+        meta,
+
+        priority,
+
+        completed:false
+
+    });
+
+
+    saveData();
+
+    closeModal();
+
+    renderTasks();
+
+    showToast(
+        "Task created successfully ✓"
+    );
+
+}
+
+
+/* =========================================================
+   NOTES
+========================================================= */
+
+function renderNotes() {
+
+    document.getElementById("content")
+    .innerHTML = `
+
+    <div class="page-header">
+
+        <div>
+
+            <div class="eyebrow">
+                KNOWLEDGE BASE
+            </div>
+
+            <h1>
+                My Notes 📝
+            </h1>
+
+            <p>
+                Keep your most important study
+                information in one place.
+            </p>
+
+        </div>
+
+        <button
+            class="btn btn-primary"
+            onclick="openNoteModal()"
+        >
+            + New Note
+        </button>
+
+    </div>
+
+
+    <div class="notes-grid">
+
+        ${notes
+            .map(
+                note => `
+
+                <article
+                    class="card note-card"
+                >
+
+                    <div
+                        class="note-tag"
+                    >
+                        ${note.tag}
+                    </div>
+
+                    <h3>
+                        ${note.title}
+                    </h3>
+
+                    <p>
+                        ${note.content}
+                    </p>
+
+                    <br>
+
+                    <button
+                        class="btn btn-outline"
+                        onclick="
+                        showToast(
+                        'Note opened'
+                        )
+                        "
+                    >
+                        Open Note →
+                    </button>
+
+                </article>
+
+                `
+            )
+            .join("")}
+
+    </div>
+
+    `;
+
+}
+
+
+/* =========================================================
+   NOTE MODAL
+========================================================= */
+
+function openNoteModal() {
+
+    document.getElementById("modalContent")
+    .innerHTML = `
+
+    <h2>
+        Create Note
+    </h2>
+
+    <br>
+
+    <div class="form-group">
+
+        <label>
+            TITLE
+        </label>
+
+        <input
+            id="noteTitle"
+            placeholder="e.g. C++ Arrays"
+        >
+
+    </div>
+
+
+    <div class="form-group">
+
+        <label>
+            CATEGORY
+        </label>
+
+        <input
+            id="noteTag"
+            placeholder="PROGRAMMING"
+        >
+
+    </div>
+
+
+    <div class="form-group">
+
+        <label>
+            NOTE
+        </label>
+
+        <textarea
+            id="noteContent"
+            rows="6"
+            placeholder="
+            Write your study note here...
+            "
+        ></textarea>
+
+    </div>
+
+
+    <button
+        class="btn btn-primary"
+        onclick="createNote()"
+    >
+        Save Note
+    </button>
+
+    `;
+
+    document
+        .getElementById("modal")
+        .classList.add("show");
+
+}
+
+
+/* =========================================================
+   CREATE NOTE
+========================================================= */
+
+function createNote() {
+
+    const title =
+        document
+        .getElementById("noteTitle")
+        .value
+        .trim();
+
+
+    const tag =
+        document
+        .getElementById("noteTag")
+        .value
+        .trim()
+        .toUpperCase()
+        ||
+        "STUDY";
+
+
+    const content =
+        document
+        .getElementById("noteContent")
+        .value
+        .trim();
+
+
+    if (!title || !content) {
+
+        showToast(
+            "Enter a title and note"
+        );
+
+        return;
+
+    }
+
+
+    notes.unshift({
+
+        title,
+
+        tag,
+
+        content
+
+    });
+
+
+    saveData();
+
+    closeModal();
+
+    renderNotes();
+
+    showToast(
+        "Note saved ✓"
+    );
+
+}
+
+
+/* =========================================================
+   TIMETABLE
+========================================================= */
+
+function scheduleHTML() {
+
+    return `
+
+    <div class="schedule-item">
+
+        <div class="schedule-time">
+            8:00 AM
+        </div>
+
+        <div class="schedule-class">
+
+            <strong>
+                Structured Programming
+            </strong>
+
+            <small>
+                ICT Lab 2 • 2 hours
+            </small>
+
+        </div>
+
+    </div>
+
+
+    <div class="schedule-item">
+
+        <div class="schedule-time">
+            11:00 AM
+        </div>
+
+        <div class="schedule-class">
+
+            <strong>
+                Calculus I
+            </strong>
+
+            <small>
+                ASF LT • 1 hour
+            </small>
+
+        </div>
+
+    </div>
+
+
+    <div class="schedule-item">
+
+        <div class="schedule-time">
+            2:00 PM
+        </div>
+
+        <div class="schedule-class">
+
+            <strong>
+                Discrete Mathematics
+            </strong>
+
+            <small>
+                CLT • 2 hours
+            </small>
+
+        </div>
+
+    </div>
+
+    `;
+
+}
+
+
+function renderSchedule() {
+
+    document.getElementById("content")
+    .innerHTML = `
+
+    <div class="page-header">
+
+        <div>
+
+            <div class="eyebrow">
+                SCHEDULE
+            </div>
+
+            <h1>
+                My Timetable 🗓
+            </h1>
+
+            <p>
+                Organize your classes and study sessions.
+            </p>
+
+        </div>
+
+        <button
+            class="btn btn-primary"
+            onclick="
+            showToast(
+            'Schedule editor coming soon'
+            )
+            "
+        >
+            + Add Block
+        </button>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2>
+            Monday
+        </h2>
+
+        <br>
+
+        ${scheduleHTML()}
+
+        <hr
+            style="
+            border:none;
+            border-top:
+            1px solid var(--border);
+            margin:25px 0;
+            "
+        >
+
+        <h2>
+            Tuesday
+        </h2>
+
+        <br>
+
+        <div class="schedule-item">
+
+            <div class="schedule-time">
+                9:00 AM
+            </div>
+
+            <div class="schedule-class">
+
+                <strong>
+                    Probability & Statistics
+                </strong>
+
+                <small>
+                    Lecture Hall 4 • 2 hours
+                </small>
+
+            </div>
+
+        </div>
+
+        <div class="schedule-item">
+
+            <div class="schedule-time">
+                1:00 PM
+            </div>
+
+            <div class="schedule-class">
+
+                <strong>
+                    Information Technology
+                </strong>
+
+                <small>
+                    ICT Lab • 2 hours
+                </small>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    `;
+
+}
+
+
+/* =========================================================
+   CWA CALCULATOR
+========================================================= */
+
+function renderCWA() {
+
+    document.getElementById("content")
+    .innerHTML = `
+
+    <div class="page-header">
+
+        <div>
+
+            <div class="eyebrow">
+                ACADEMIC ANALYTICS
+            </div>
+
+            <h1>
+                CWA Calculator 🎓
+            </h1>
+
+            <p>
+                Calculate your weighted average from
+                course marks and credit hours.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="calculator">
+
+
+        <div class="card">
+
+            <h2>
+                Add Course
+            </h2>
+
+            <br>
+
+
+            <div class="form-group">
+
+                <label>
+                    COURSE
+                </label>
+
+                <input
+                    id="calcCourse"
+                    placeholder="
+                    e.g. Calculus
+                    "
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    MARK (%)
+                </label>
+
+                <input
+                    id="calcMark"
+                    type="number"
+                    min="0"
+                    max="100"
+                    placeholder="85"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    CREDIT HOURS
+                </label>
+
+                <input
+                    id="calcCredits"
+                    type="number"
+                    min="1"
+                    placeholder="3"
+                >
+
+            </div>
+
+
+            <button
+                class="btn btn-primary"
+                onclick="addCalculationCourse()"
+            >
+                Add Course
+            </button>
+
+
+            <div
+                id="calculationCourses"
+                style="
+                margin-top:20px;
+                "
+            ></div>
+
+        </div>
+
+
+        <div>
+
+            <div class="result-box">
+
+                <div>
+                    CURRENT CWA
+                </div>
+
+                <h2 id="cwaResult">
+                    0.00
+                </h2>
+
+                <div>
+                    Based on courses entered
+                </div>
+
+            </div>
+
+
+            <div
+                class="card"
+                style="margin-top:20px"
+            >
+
+                <h3>
+                    How it works
+                </h3>
+
+                <p
+                    style="
+                    color:var(--muted);
+                    font-size:12px;
+                    line-height:1.7;
+                    margin-top:10px;
+                    "
+                >
+                    CWA is calculated by multiplying
+                    each course mark by its credit
+                    hours, adding the results and
+                    dividing by the total credit hours.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    `;
+
+}
+
+
+/* =========================================================
+   CWA CALCULATION
+========================================================= */
+
+let calculationCourses = [];
+
+
+function addCalculationCourse() {
+
+    const name =
+        document
+        .getElementById("calcCourse")
+        .value;
+
+
+    const mark =
+        Number(
+            document
+            .getElementById("calcMark")
+            .value
+        );
+
+
+    const credits =
+        Number(
+            document
+            .getElementById("calcCredits")
+            .value
+        );
+
+
+    if (
+        !name ||
+        mark < 0 ||
+        mark > 100 ||
+        credits <= 0
+    ) {
+
+        showToast(
+            "Enter valid course information"
+        );
+
+        return;
+
+    }
+
+
+    calculationCourses.push({
+
+        name,
+
+        mark,
+
+        credits
+
+    });
+
+
+    calculateCWA();
+
+    document
+        .getElementById("calcCourse")
+        .value = "";
+
+    document
+        .getElementById("calcMark")
+        .value = "";
+
+    document
+        .getElementById("calcCredits")
+        .value = "";
+
+}
+
+
+function calculateCWA() {
+
+    let weightedTotal = 0;
+
+    let creditTotal = 0;
+
+
+    calculationCourses.forEach(
+        course => {
+
+            weightedTotal +=
+                course.mark *
+                course.credits;
+
+            creditTotal +=
+                course.credits;
+
+        }
+    );
+
+
+    const cwa =
+        creditTotal === 0
+        ?
+        0
+        :
+        weightedTotal /
+        creditTotal;
+
+
+    document
+        .getElementById("cwaResult")
+        .textContent =
+        cwa.toFixed(2);
+
+
+    document
+        .getElementById("calculationCourses")
+        .innerHTML =
+        calculationCourses
+        .map(
+            course => `
+
+            <div
+                style="
+                padding:10px;
+                border-bottom:
+                1px solid var(--border);
+                display:flex;
+                justify-content:space-between;
+                font-size:12px;
+                "
+            >
+
+                <span>
+                    ${course.name}
+                </span>
+
+                <strong>
+                    ${course.mark} ×
+                    ${course.credits}
+                </strong>
+
+            </div>
+
+            `
+        )
+        .join("");
+
+}
+
+
+/* =========================================================
+   PROGRESS PAGE
+========================================================= */
+
+function renderProgress() {
+
+    document.getElementById("content")
+    .innerHTML = `
+
+    <div class="page-header">
+
+        <div>
+
+            <div class="eyebrow">
+                ANALYTICS
+            </div>
+
+            <h1>
+                Academic Progress 📊
+            </h1>
+
+            <p>
+                Understand your strengths and
+                improvement areas.
+            </p>
+
+        </div>
+
+        <button
+            class="btn btn-outline"
+            onclick="
+            showToast(
+            'Progress report prepared'
+            )
+            "
+        >
+            Export Report
+        </button>
+
+    </div>
+
+
+    <div class="grid">
+
+
+        <div
+            class="card col-5"
+            style="
+            text-align:center;
+            "
+        >
+
+            <div
+                class="progress-circle"
+                style="
+                width:170px;
+                height:170px;
+                margin:auto;
+                "
+            >
+
+                <div
+                    class="progress-circle-inner"
+                    style="
+                    width:130px;
+                    height:130px;
+                    "
+                >
+                    82%
+                </div>
+
+            </div>
+
+            <h2
+                style="
+                margin-top:20px;
+                "
+            >
+                Semester Progress
+            </h2>
+
+            <p
+                style="
+                color:var(--muted);
+                font-size:12px;
+                margin-top:7px;
+                "
+            >
+                You're moving in the right direction.
+            </p>
+
+        </div>
+
+
+        <div class="card col-7">
+
+            <div class="card-header">
+
+                <h2>
+                    Course Performance
+                </h2>
+
+            </div>
+
+            ${courses
+                .map(courseHTML)
+                .join("")}
+
+        </div>
+
+
+    </div>
+
+    `;
+
+}
+
+
+/* =========================================================
+   AI STUDY ASSISTANT
+========================================================= */
+
+function renderAI() {
+
+    document.getElementById("content")
+    .innerHTML = `
+
+    <div class="page-header">
+
+        <div>
+
+            <div class="eyebrow">
+                CAMPUSOS AI
+            </div>
+
+            <h1>
+                AI Study Assistant 🤖
+            </h1>
+
+            <p>
+                Your personal study companion.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="card ai-box">
+
+        <div
+            class="chat-messages"
+            id="chatMessages"
+        >
+
+            <div class="message ai">
+
+                👋 Hi Priscilla! I'm your
+                CampusOS study assistant.
+
+                <br><br>
+
+                You can ask me things like:
+
+                <br>
+                • Explain arrays in C++
+                <br>
+                • Give me a calculus quiz
+                <br>
+                • Explain Bayes theorem
+                <br>
+                • Help me prepare for an exam
+
+            </div>
+
+        </div>
+
+
+        <div class="chat-input">
+
+            <input
+                id="aiInput"
+                placeholder="
+                Ask your study assistant...
+                "
+                onkeydown="
+                if(event.key==='Enter')
+                sendAIMessage()
+                "
+            >
+
+            <button
+                class="btn btn-primary"
+                onclick="sendAIMessage()"
+            >
+                Send
+            </button>
+
+        </div>
+
+    </div>
+
+    `;
+
+}
+
+
+/* =========================================================
+   AI DEMO
+========================================================= */
+
+function sendAIMessage() {
+
+    const input =
+        document
+        .getElementById("aiInput");
+
+
+    const message =
+        input.value.trim();
+
+
+    if (!message) {
+
+        return;
+
+    }
+
+
+    const chat =
+        document
+        .getElementById("chatMessages");
+
+
+    chat.innerHTML += `
+
+        <div class="message user">
+
+            ${escapeHTML(message)}
+
+        </div>
+
+    `;
+
+
+    input.value = "";
+
+
+    setTimeout(
+        () => {
+
+            let response =
+                getAIResponse(message);
+
+
+            chat.innerHTML += `
+
+                <div class="message ai">
+
+                    ${response}
+
+                </div>
+
+            `;
+
+
+            chat.scrollTop =
+                chat.scrollHeight;
+
+        },
+
+        500
+    );
+
+}
+
+
+/* =========================================================
+   DEMO AI RESPONSES
+========================================================= */
+
+function getAIResponse(message) {
+
+    const text =
+        message.toLowerCase();
+
+
+    if (
+        text.includes("array")
+    ) {
+
+        return `
+        An array stores multiple values
+        of the same data type.
+
+        In C++:
+
+        <br><br>
+
+        <b>int numbers[5];</b>
+
+        <br><br>
+
+        The first element is at index 0.
+        `;
+
+    }
+
+
+    if (
+        text.includes("calculus")
+    ) {
+
+        return `
+        Let's study Calculus! 📚
+
+        Start with limits, derivatives
+        and integration.
+
+        I can also generate practice
+        questions for you.
+        `;
+
+    }
+
+
+    if (
+        text.includes("bayes")
+    ) {
+
+        return `
+        Bayes' theorem helps us calculate
+        the probability of an event based
+        on previous information.
+
+        Ask me for a simple example
+        and I'll walk you through it.
+        `;
+
+    }
+
+
+    if (
+        text.includes("quiz")
+    ) {
+
+        return `
+        🎯 Quick quiz:
+
+        What is the first index of an
+        array in C++?
+
+        A. 0
+        <br>
+        B. 1
+        <br>
+        C. -1
+        <br>
+        D. 2
+        `;
+
+    }
+
+
+    return `
+        That's a great question! 🎓
+
+        For the full AI version of CampusOS,
+        this interface can later be connected
+        to an actual AI API so it can answer
+        questions dynamically.
+        `;
+
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHTML(text) {
+
+    return text
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+}
+
+
+/* =========================================================
+   FOCUS MODE
+========================================================= */
+
+let timerInterval;
+
+let focusSeconds = 25 * 60;
+
+
+function startFocus() {
+
+    focusSeconds = 25 * 60;
+
+    showFocusModal();
+
+}
+
+
+function showFocusModal() {
+
+    document.getElementById("modalContent")
+    .innerHTML = `
+
+    <div class="timer">
+
+        <div class="eyebrow">
+            FOCUS SESSION
+        </div>
+
+        <h2>
+            Deep Work Mode 🎯
+        </h2>
+
+        <div
+            class="timer-display"
+            id="timerDisplay"
+        >
+            25:00
+        </div>
+
+        <p
+            style="
+            color:var(--muted);
+            font-size:12px;
+            "
+        >
+            Put your phone away.
+            Focus on one task.
+        </p>
+
+        <br>
+
+        <button
+            class="btn btn-primary"
+            onclick="beginTimer()"
+        >
+            Start Timer
+        </button>
+
+    </div>
+
+    `;
+
+
+    document
+        .getElementById("modal")
+        .classList.add("show");
+
+}
+
+
+function beginTimer() {
+
+    clearInterval(timerInterval);
+
+
+    timerInterval =
+        setInterval(
+            () => {
+
+                focusSeconds--;
+
+
+                const minutes =
+                    Math.floor(
+                        focusSeconds / 60
+                    );
+
+
+                const seconds =
+                    focusSeconds % 60;
+
+
+                const display =
+                    document
+                    .getElementById(
+                        "timerDisplay"
+                    );
+
+
+                if (display) {
+
+                    display.textContent =
+                        `${String(minutes).padStart(2,"0")}:${String(seconds).padStart(2,"0")}`;
+
+                }
+
+
+                if (
+                    focusSeconds <= 0
+                ) {
+
+                    clearInterval(
+                        timerInterval
+                    );
+
+                    closeModal();
+
+                    showToast(
+                        "🎉 Focus session complete!"
+                    );
+
+                }
+
+            },
+
+            1000
+        );
+
+}
+
+
+/* =========================================================
+   DARK MODE
+========================================================= */
+
+function toggleDarkMode() {
+
+    document.body
+        .classList
+        .toggle("dark");
+
+
+    localStorage.setItem(
+        "campusTheme",
+
+        document.body.classList.contains(
+            "dark"
+        )
+        ?
+        "dark"
+        :
+        "light"
+    );
+
+}
+
+
+/* =========================================================
+   SIDEBAR MOBILE
+========================================================= */
+
+function toggleSidebar() {
+
+    document
+        .getElementById("sidebar")
+        .classList
+        .toggle("open");
+
+}
+
+
+/* =========================================================
+   NOTIFICATIONS
+========================================================= */
+
+function showNotifications() {
+
+    showToast(
+        "🔔 You have 3 academic reminders"
+    );
+
+}
+
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+function globalSearch(value) {
+
+    if (
+        value.trim().length > 2
+    ) {
+
+        console.log(
+            "Searching CampusOS:",
+            value
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+function closeModal() {
+
+    document
+        .getElementById("modal")
+        .classList
+        .remove("show");
+
+    clearInterval(
+        timerInterval
+    );
+
+}
+
+
+document
+    .getElementById("modal")
+    .addEventListener(
+        "click",
+        function(event) {
+
+            if (
+                event.target === this
+            ) {
+
+                closeModal();
+
+            }
+
+        }
+    );
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+function showToast(message) {
+
+    const toast =
+        document
+        .getElementById("toast");
+
+
+    toast.textContent =
+        message;
+
+
+    toast.classList.add(
+        "show"
+    );
+
+
+    setTimeout(
+        () => {
+
+            toast.classList.remove(
+                "show"
+            );
+
+        },
+
+        2500
+    );
+
+}
+
+
+/* =========================================================
+   KEYBOARD SHORTCUT
+========================================================= */
+
+document.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (
+            (event.ctrlKey ||
+            event.metaKey) &&
+            event.key.toLowerCase()
+            === "k"
+        ) {
+
+            event.preventDefault();
+
+            document
+                .getElementById(
+                    "searchInput"
+                )
+                .focus();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   LOAD THEME
+========================================================= */
+
+if (
+    localStorage.getItem(
+        "campusTheme"
+    ) === "dark"
+) {
+
+    document.body
+        .classList
+        .add("dark");
+
+}
+
+
+/* =========================================================
+   INITIAL PAGE
+========================================================= */
+
+renderDashboard();
+
+</script>
+
+</body>
+</html>
