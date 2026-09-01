@@ -1,0 +1,388 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Collagen & Your Skin</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #fff0f5, #ffe4ec, #f8d7e3);
+            color: #3a2630;
+            line-height: 1.7;
+        }
+
+        header {
+            min-height: 70vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px 20px;
+            background:
+                radial-gradient(circle at 20% 30%, rgba(255,255,255,0.8), transparent 25%),
+                linear-gradient(135deg, #ffcad9, #f7a8bd);
+        }
+
+        header h1 {
+            font-size: 4rem;
+            color: #7b2948;
+            margin-bottom: 15px;
+        }
+
+        header p {
+            max-width: 700px;
+            font-size: 1.25rem;
+            color: #4d2937;
+        }
+
+        .collagen-symbol {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 4rem;
+            margin-bottom: 25px;
+            box-shadow: 0 15px 40px rgba(123, 41, 72, 0.2);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+
+        section {
+            padding: 70px 10%;
+        }
+
+        .title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #7b2948;
+            margin-bottom: 45px;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 25px;
+        }
+
+        .card {
+            background: rgba(255,255,255,0.8);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(80, 30, 50, 0.1);
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(80, 30, 50, 0.2);
+        }
+
+        .card h3 {
+            color: #a8325b;
+            margin-bottom: 12px;
+            font-size: 1.4rem;
+        }
+
+        .skin-section {
+            background: #fff8fa;
+        }
+
+        .skin-box {
+            max-width: 900px;
+            margin: auto;
+            background: white;
+            padding: 40px;
+            border-radius: 25px;
+            box-shadow: 0 15px 40px rgba(90, 30, 50, 0.12);
+        }
+
+        .skin-box p {
+            margin-bottom: 20px;
+        }
+
+        .diagram {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 25px;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+
+        .circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ffd1df, #f39ab5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+            font-weight: bold;
+            color: #6d2340;
+            box-shadow: 0 10px 25px rgba(120, 40, 70, 0.15);
+        }
+
+        .arrow {
+            font-size: 2.5rem;
+            color: #a8325b;
+        }
+
+        .facts {
+            background: linear-gradient(135deg, #7b2948, #a8325b);
+            color: white;
+        }
+
+        .facts .title {
+            color: white;
+        }
+
+        .facts ul {
+            max-width: 750px;
+            margin: auto;
+            list-style: none;
+        }
+
+        .facts li {
+            background: rgba(255,255,255,0.12);
+            margin: 15px 0;
+            padding: 18px 25px;
+            border-radius: 12px;
+        }
+
+        .facts li::before {
+            content: "✓";
+            margin-right: 12px;
+            font-weight: bold;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            background: #341923;
+            color: #ffdce7;
+        }
+
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 2.7rem;
+            }
+
+            section {
+                padding: 50px 6%;
+            }
+
+            .arrow {
+                transform: rotate(90deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HERO SECTION -->
+    <header>
+        <div class="collagen-symbol">🧬</div>
+
+        <h1>Collagen & Your Skin</h1>
+
+        <p>
+            Discover the fascinating protein that helps give your skin
+            strength, structure and elasticity.
+        </p>
+    </header>
+
+
+    <!-- WHAT IS COLLAGEN -->
+    <section>
+        <h2 class="title">What Is Collagen?</h2>
+
+        <div class="cards">
+
+            <div class="card">
+                <h3>🧬 A Protein</h3>
+                <p>
+                    Collagen is the most abundant protein in the human body.
+                    It acts as an important structural component of many tissues.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>🏗️ Structural Support</h3>
+                <p>
+                    It helps provide strength and structure to the skin,
+                    bones, tendons, ligaments and cartilage.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>✨ Important for Skin</h3>
+                <p>
+                    A large amount of the skin's structural framework is
+                    made from collagen, particularly in the dermis.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- COLLAGEN AND SKIN -->
+    <section class="skin-section">
+
+        <h2 class="title">How Is Collagen Related to Skin?</h2>
+
+        <div class="skin-box">
+
+            <p>
+                The skin has several layers. Collagen is especially important
+                in the <strong>dermis</strong>, the layer beneath the outer
+                epidermis.
+            </p>
+
+            <p>
+                Collagen fibers form part of the skin's structural network.
+                Together with other proteins such as elastin, they help the
+                skin maintain its structure and resilience.
+            </p>
+
+            <div class="diagram">
+
+                <div class="circle">
+                    Collagen<br>
+                    provides structure
+                </div>
+
+                <div class="arrow">→</div>
+
+                <div class="circle">
+                    Skin gains<br>
+                    structural support
+                </div>
+
+                <div class="arrow">→</div>
+
+                <div class="circle">
+                    Skin can maintain<br>
+                    firmness & resilience
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- AGING -->
+    <section>
+
+        <h2 class="title">What Happens as We Age?</h2>
+
+        <div class="cards">
+
+            <div class="card">
+                <h3>⏳ Collagen Production</h3>
+                <p>
+                    As people age, the body's production of collagen generally
+                    decreases.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>〰️ Skin Changes</h3>
+                <p>
+                    Changes in collagen and other structural components can
+                    contribute to reduced skin firmness and elasticity.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>☀️ Environmental Factors</h3>
+                <p>
+                    Excessive ultraviolet (UV) exposure can damage collagen
+                    and contribute to premature skin aging.
+                </p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- SUPPORTING COLLAGEN -->
+    <section class="facts">
+
+        <h2 class="title">How Can You Support Healthy Skin?</h2>
+
+        <ul>
+            <li>Eat a balanced diet containing adequate protein.</li>
+            <li>Eat foods rich in vitamin C, which is needed for collagen synthesis.</li>
+            <li>Protect your skin from excessive UV exposure.</li>
+            <li>Avoid smoking, which can damage collagen and accelerate skin aging.</li>
+            <li>Maintain good overall health and hydration.</li>
+        </ul>
+
+    </section>
+
+
+    <!-- SUMMARY -->
+    <section>
+
+        <h2 class="title">The Big Picture</h2>
+
+        <div class="skin-box">
+
+            <p>
+                <strong>Collagen is like part of the skin's internal
+                scaffolding.</strong>
+            </p>
+
+            <p>
+                It doesn't simply "make your skin beautiful." Instead,
+                collagen provides structural support that helps the skin
+                maintain its strength and resilience.
+            </p>
+
+            <p>
+                As collagen production and organization change with age
+                and environmental exposure, visible changes such as reduced
+                firmness and the development of wrinkles can occur.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <footer>
+        <p>🧬 Collagen & Skin | Learn • Understand • Protect</p>
+    </footer>
+
+</body>
+</html>
+```
