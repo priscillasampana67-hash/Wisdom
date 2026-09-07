@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>How to Build an AI Agent</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #0b1020;
+            color: white;
+            line-height: 1.6;
+        }
+
+        header {
+            text-align: center;
+            padding: 50px 20px;
+            background: linear-gradient(135deg, #101a40, #182b63);
+        }
+
+        header h1 {
+            font-size: 42px;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            color: #cbd5ff;
+            font-size: 18px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            padding: 40px 20px;
+        }
+
+        .section {
+            background: #141b31;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 15px;
+            border: 1px solid #29365c;
+        }
+
+        h2 {
+            color: #72a7ff;
+            margin-bottom: 15px;
+        }
+
+        h3 {
+            color: #8fc1ff;
+            margin-top: 15px;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .step {
+            background: #1c2744;
+            padding: 20px;
+            border-radius: 12px;
+        }
+
+        .number {
+            font-size: 30px;
+            font-weight: bold;
+            color: #72a7ff;
+        }
+
+        code {
+            background: #080d1a;
+            padding: 3px 7px;
+            border-radius: 5px;
+            color: #8cffc1;
+        }
+
+        .agent-box {
+            text-align: center;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 100px;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 10px;
+            border: none;
+            background: #080d1a;
+            color: white;
+            font-size: 16px;
+        }
+
+        button {
+            margin-top: 15px;
+            padding: 13px 25px;
+            border: none;
+            border-radius: 8px;
+            background: #3478f6;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #245dcc;
+        }
+
+        #response {
+            margin-top: 20px;
+            padding: 20px;
+            background: #080d1a;
+            border-radius: 10px;
+            min-height: 50px;
+            color: #8cffc1;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #8994b3;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>🤖 How to Build an AI Agent</h1>
+    <p>Learn the basic architecture behind intelligent AI agents.</p>
+</header>
+
+<div class="container">
+
+    <div class="section">
+        <h2>What is an AI Agent?</h2>
+
+        <p>
+            An AI agent is a program that can receive information,
+            understand what is needed, make decisions, use tools,
+            and perform actions to achieve a goal.
+        </p>
+
+        <div class="steps">
+
+            <div class="step">
+                <div class="number">01</div>
+                <h3>Input</h3>
+                <p>The user gives the agent a command or question.</p>
+            </div>
+
+            <div class="step">
+                <div class="number">02</div>
+                <h3>Think</h3>
+                <p>The AI analyzes the request and decides what to do.</p>
+            </div>
+
+            <div class="step">
+                <div class="number">03</div>
+                <h3>Tools</h3>
+                <p>The agent can use tools such as databases, APIs or search.</p>
+            </div>
+
+            <div class="step">
+                <div class="number">04</div>
+                <h3>Action</h3>
+                <p>The agent performs an action and returns the result.</p>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="section">
+
+        <h2>🧠 Basic AI Agent Architecture</h2>
+
+        <p>
+            A typical AI agent looks like this:
+        </p>
+
+        <br>
+
+        <p style="text-align:center; font-size:20px;">
+            👤 User
+            →
+            🧠 AI Model
+            →
+            🔧 Tools
+            →
+            ⚡ Action
+            →
+            👤 User
+        </p>
+
+    </div>
+
+
+    <div class="section">
+
+        <h2>💻 Technologies You Can Use</h2>
+
+        <h3>Frontend</h3>
+        <p>
+            HTML, CSS and JavaScript create the interface that
+            the user interacts with.
+        </p>
+
+        <h3>Backend</h3>
+        <p>
+            Python, JavaScript/Node.js or another backend language
+            connects the application to the AI model.
+        </p>
+
+        <h3>AI Model</h3>
+        <p>
+            The backend sends the user's request to an AI model
+            and receives the model's response.
+        </p>
+
+        <h3>Tools</h3>
+        <p>
+            An agent can be connected to APIs, databases,
+            calculators, search systems and other software.
+        </p>
+
+    </div>
+
+
+    <div class="section agent-box">
+
+        <h2>🤖 Try Your Mini Agent</h2>
+
+        <p>
+            Type a command below. This demo uses JavaScript
+            to simulate an AI agent.
+        </p>
+
+        <textarea
+            id="userInput"
+            placeholder="Example: Explain artificial intelligence">
+        </textarea>
+
+        <br>
+
+        <button onclick="runAgent()">
+            Run AI Agent
+        </button>
+
+        <div id="response">
+            Your agent's response will appear here...
+        </div>
+
+    </div>
+
+</div>
+
+
+<footer>
+    <p>Built with HTML, CSS and JavaScript 🚀</p>
+</footer>
+
+
+<script>
+
+function runAgent() {
+
+    let input = document.getElementById("userInput").value;
+
+    let response = document.getElementById("response");
+
+    if (input.trim() === "") {
+        response.innerHTML = "⚠️ Please enter a command.";
+        return;
+    }
+
+    response.innerHTML = "🧠 Agent is thinking...";
+
+    setTimeout(function() {
+
+        response.innerHTML =
+            "🤖 I received your request:<br><br>" +
+            "<strong>" + input + "</strong><br><br>" +
+            "This is a simulated AI agent. " +
+            "To make it a REAL AI agent, connect this frontend " +
+            "to a Python backend and an AI model API.";
+
+    }, 1000);
+}
+
+</script>
+
+</body>
+</html>
