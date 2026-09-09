@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>FarmVoice AI | Field Terminal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-stone-900 text-stone-100 min-h-screen p-4 flex flex-col items-center justify-center">
+  <div class="max-w-2xl w-full bg-stone-800 border border-stone-700 rounded-2xl p-6 shadow-2xl space-y-5">
+    <div class="border-b border-stone-700 pb-4 flex justify-between items-center">
+      <div>
+        <h1 class="text-2xl font-black text-emerald-400">🌾 FarmVoice AI</h1>
+        <p class="text-xs text-stone-400">Autonomous Agricultural Field Agent</p>
+      </div>
+      <span class="text-xs bg-emerald-950 text-emerald-300 border border-emerald-800 px-3 py-1 rounded-full font-mono">ONLINE</span>
+    </div>
+
+    <div class="space-y-3">
+      <label class="block text-sm font-semibold text-stone-300">Farmer Inquiry (Text or Voice Transcribed)</label>
+      <textarea id="promptInput" rows="3" class="w-full bg-stone-950 border border-stone-700 rounded-lg p-3 text-sm focus:outline-emerald-500 text-stone-100" placeholder="e.g., My maize plants have caterpillars and holes in the leaves. Also, how much is maize selling for in Kumasi?"></textarea>
+      
+      <div>
+        <label class="block text-xs font-semibold text-stone-400 mb-1">Optional Leaf Photo (Visual Pathology)</label>
+        <input type="file" id="imageInput" accept="image/*" class="text-xs text-stone-400 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-stone-700 file:text-stone-200 hover:file:bg-stone-600"/>
+      </div>
+    </div>
+
+    <button id="sendBtn" onclick="submitInquiry()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 rounded-lg transition duration-200">
+      Run Autonomous Agent
+    </button>
+
+    <div id="loader" class="hidden text-center py-4">
+      <p class="text-sm font-semibold text-emerald-400 animate-pulse">Running GPT-4o Multimodal Agent & Tool Calling...</p>
+    </div>
+
+    <div id="resultBox" class="hidden bg-stone-950 border border-stone-800 rounded-xl p-4 space-y-3">
+      <h3 class="text-xs font-mono font-bold text-emerald-400 uppercase tracking-wide">Autonomous Output</h3>
+      <div id="outputText" class="text-sm text-stone-200 whitespace-pre-line leading-relaxed"></div>
+      <div id="audioPlayerContainer" class="pt-2"></div>
+    </div>
+  </div>
+
+  <script>
+    async function submitInquiry() {
+      const text = document.getElementById("promptInput").value;
+      const fileInput = document.getElementById("imageInput");
+      if (!text && fileInput.files.length === 0) return alert("Enter a prompt or choose a photo.");
+
+      document.getElementById("loader").classList.remove("hidden");
+      document.getElementById("resultBox").classList.add("hidden");
+
+      const fd = new FormData();
+      fd.append("text", text);
+      if (fileInput.files.length > 0) {
+        fd.append("file", fileInput.files[0]);
+      }
+
+      try {
+        const res = await fetch("/api/diagnose", { method: "POST", body: fd });
+        const data = await res.json();
+        
+        document.getElementById("outputText").innerText = data.text_response;
+        const container = document.getElementById("audioPlayerContainer");
+        if (data.audio_url) {
+          container.innerHTML = `<label class="text-xs font-semibold text-stone-400 block mb-1">Generated Spoken Voice Output:</label><audio controls class="w-full"><source src="${data.audio_url}" type="audio/mpeg"></audio>`;
+        } else {
+          container.innerHTML = "";
+        }
+        document.getElementById("resultBox").classList.remove("hidden");
+      } catch (err) {
+        alert("Execution error. Verify backend is running and API key is set.");
+      } finally {
+        document.getElementById("loader").classList.add("hidden");
+      }
+    }
+  </script>
+</body>
+</html>

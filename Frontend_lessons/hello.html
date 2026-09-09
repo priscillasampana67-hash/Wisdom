@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FarmVoice AI | Live Terminal</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-stone-900 text-stone-100 min-h-screen flex items-center justify-center p-4">
+  <div class="max-w-xl w-full bg-stone-800 p-6 rounded-2xl shadow-xl border border-stone-700">
+    <h1 class="text-2xl font-bold text-emerald-400 mb-2">🌾 FarmVoice AI Controller</h1>
+    <p class="text-xs text-stone-400 mb-6">Test voice diagnostics, market trends, and pathology models live.</p>
+
+    <div class="space-y-4">
+      <div>
+        <label class="text-sm font-semibold text-stone-300">Farmer's Inquiry / Symptom</label>
+        <textarea id="promptInput" rows="3" class="w-full bg-stone-950 border border-stone-700 rounded-lg p-3 text-sm focus:outline-emerald-500" placeholder="e.g. My maize leaves have small holes and caterpillars. How much is maize in the market?"></textarea>
+      </div>
+
+      <button id="submitBtn" onclick="sendInquiry()" class="w-full bg-emerald-600 hover:bg-emerald-500 font-bold py-3 rounded-lg transition duration-200">
+        Run Agent Diagnosis
+      </button>
+
+      <div id="loader" class="hidden text-center py-4 text-emerald-400 animate-pulse text-sm">Processing with GPT-4o & Tools...</div>
+
+      <div id="resultBox" class="hidden mt-6 bg-stone-950 border border-stone-800 p-4 rounded-xl space-y-3">
+        <h3 class="text-xs font-semibold uppercase text-emerald-400">Agent Response</h3>
+        <p id="replyText" class="text-sm text-stone-200 whitespace-pre-line"></p>
+        <div id="audioContainer" class="pt-2"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    async function sendInquiry() {
+      const text = document.getElementById("promptInput").value;
+      if (!text) return;
+
+      document.getElementById("loader").classList.remove("hidden");
+      document.getElementById("resultBox").classList.add("hidden");
+
+      const formData = new FormData();
+      formData.append("text", text);
+
+      try {
+        const res = await fetch("/api/diagnose", { method: "POST", body: formData });
+        const data = await res.json();
+
+        document.getElementById("replyText").innerText = data.text_response;
+        const audioDiv = document.getElementById("audioContainer");
+        audioDiv.innerHTML = `<audio controls class="w-full mt-2"><source src="${data.audio_url}" type="audio/mpeg"></audio>`;
+        document.getElementById("resultBox").classList.remove("hidden");
+      } catch (err) {
+        alert("Request failed. Ensure server is running.");
+      } finally {
+        document.getElementById("loader").classList.add("hidden");
+      }
+    }
+  </script>
+</body>
+</html>
