@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web-Based Game Logic</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #222; color: #fff; padding: 20px; }
+        button { padding: 10px; margin: 5px; cursor: pointer; }
+        #console { background: #000; padding: 10px; border: 1px solid #0f0; color: #0f0; height: 200px; overflow-y: scroll; margin-top: 15px; font-family: monospace; }
+    </style>
+</head>
+<body>
+
+    <h2>Vehicle State Machine & Multiplayer Client</h2>
+    
+    <button onclick="enterCar()">Enter Banshee</button>
+    <button onclick="exitCar()">Exit Vehicle</button>
+    <button onclick="updatePlayer()">Update Player State</button>
+    <button onclick="connectToServer()">Connect to Server</button>
+
+    <div id="console">Game Console Initialized...<br></div>
+
+    <script>
+        // --- 1. UI Output Helper ---
+        function log(message) {
+            const consoleDiv = document.getElementById("console");
+            consoleDiv.innerHTML += message + "<br>";
+            consoleDiv.scrollTop = consoleDiv.scrollHeight;
+        }
+
+        // --- 2. Vehicle State Machine ---
+        const PlayerState = { ON_FOOT: "ON_FOOT", DRIVING: "DRIVING" };
+
+        class Vehicle {
+            constructor(name) {
+                this.name = name;
+            }
+        }
+
+        class Player {
+            constructor(name) {
+                this.name = name;
+                this.currentState = PlayerState.ON_FOOT;
+                this.currentVehicle = null;
+            }
+
+            enterVehicle(vehicle) {
+                if (this.currentState === PlayerState.ON_FOOT) {
+                    this.currentState = PlayerState.DRIVING;
+                    this.currentVehicle = vehicle;
+                    log(`${this.name} entered the ${vehicle.name}.`);
+                } else {
+                    log(`${this.name} is already driving!`);
+                }
+            }
+
+            exitVehicle() {
+                if (this.currentState === PlayerState.DRIVING) {
+                    log(`${this.name} exited the ${this.currentVehicle.name}.`);
+                    this.currentState = PlayerState.ON_FOOT;
+                    this.currentVehicle = null;
+                } else {
+                    log(`${this.name} is not in a vehicle.`);
+                }
+            }
+
+            update() {
+                if (this.currentState === PlayerState.DRIVING) {
+                    log(`${this.name} is currently driving.`);
+                } else {
+                    log(`${this.name} is moving on foot.`);
+                }
+            }
+        }
+
+        // Initialize game entities
+        const player1 = new Player("CJ");
+        const car1 = new Vehicle("Banshee");
+
+        // Button Actions
+        function enterCar() { player1.enterVehicle(car1); }
+        function exitCar() { player1.exitVehicle(); }
+        function updatePlayer() { player1.update(); }
+
+        // --- 3. Multiplayer WebSocket Client ---
+        // Note: Raw TCP sockets (like in C++ or Python) require a backend. 
+        // Browsers use WebSockets to communicate with game servers.
+        let socket;
+
+        function connectToServer() {
+            log("Attempting to connect to game server...");
+            
+            // Connecting to a placeholder local WebSocket server
+            socket = new WebSocket("ws://127.0.0.1:8080");
+
+            socket.onopen = function(e) {
+                log("Successfully connected to the multiplayer server!");
+                socket.send("Player CJ has joined the game.");
+            };
+
+            socket.onmessage = function(event) {
+                log(`Server says: ${event.data}`);
+            };
+
+            socket.onerror = function(error) {
+                log("Connection failed. Make sure your server is running.");
+            };
+        }
+    </script>
+
+</body>
+</html>
